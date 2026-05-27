@@ -155,12 +155,16 @@ It is intended as a programming-focused portfolio project.
 
 ```text
 Scripts
-├── Controllers
-├── Views
-├── Models
-├── Systems
+├── Bullet
+├── Enemy
 ├── Events
-└── Pooling
+├── Health
+├── Interfaces
+├── Movement
+├── Player
+├── Score
+├── Systems
+└── Weapon
 ```
 
 ---
