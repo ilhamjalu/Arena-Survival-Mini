@@ -6,7 +6,7 @@ using UnityEngine;
 public class ScoreManager : MonoBehaviour
 {
     [SerializeField] ScoreView scoreView;
-    [SerializeField] Score scoreModel;
+    [SerializeField] public Score scoreModel;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +29,8 @@ public class ScoreManager : MonoBehaviour
     private void HandleEnemyKilled(int score)
     {
         scoreModel.AddScore(score);
+
+        scoreModel.AddKill();
 
         scoreView.UpdateScoreText(scoreModel.score);
 

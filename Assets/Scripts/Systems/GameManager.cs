@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] GameObject winPanel;
-    [SerializeField] GameObject losePanel;
+    [SerializeField] GameObject resultPanel;
+    [SerializeField] TextMeshProUGUI enemyKilledText;
+    [SerializeField] TextMeshProUGUI panelTitle;
+    [SerializeField] ScoreManager scoreManager;
 
     public bool gameEnded;
 
@@ -30,7 +33,7 @@ public class GameManager : MonoBehaviour
 
         if(score >= 50)
         {
-            WinGame();
+            ShowResultPanel("YOU WIN!");
         }
     }
 
@@ -38,21 +41,16 @@ public class GameManager : MonoBehaviour
     {
         if(gameEnded) return;
 
-        LoseGame();
+        ShowResultPanel("YOU LOSE!");
     }
 
-    public void WinGame()
+    public void ShowResultPanel(string title)
     {
         gameEnded = true;
         Time.timeScale = 0;
-        winPanel.SetActive(true);
-    }
-
-    public void LoseGame()
-    {
-        gameEnded = true;
-        Time.timeScale = 0;
-        losePanel.SetActive(true);
+        resultPanel.SetActive(true);
+        enemyKilledText.text = scoreManager.scoreModel.killCount.ToString();
+        panelTitle.text = title;
     }
 
     public void ResetGame()
