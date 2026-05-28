@@ -11,7 +11,7 @@ public class WeaponView : MonoBehaviour
     [SerializeField] public List<WeaponDirection> visuals;
 
     private Dictionary<Direction, WeaponDirection> visualMap;
-
+    private Coroutine muzzleRoutine;
 
     // Start is called before the first frame update
     void Start()
@@ -45,8 +45,14 @@ public class WeaponView : MonoBehaviour
 
         if (absX > absY)
         {
-            gunRenderer.flipX = direction.x < 0;
-            return Direction.Side;
+            gunRenderer.flipX = direction.x > 0;
+
+            if(direction.x < 0)
+            {
+                return Direction.Left;
+            }
+
+            return Direction.Right;
         }
 
         if (direction.y > 0)
@@ -59,14 +65,37 @@ public class WeaponView : MonoBehaviour
 
     private void ApplyVisual(WeaponDirection visual)
     {
+        firePoint.localPosition = visual.muzzleLocalPosition;
+
         gunRenderer.sprite = visual.gunSprite;
 
         gunTransform.localPosition = visual.gunLocalPosition;
 
-        firePoint.localPosition = visual.muzzleLocalPosition;
-
         muzzlePoint.localPosition = visual.muzzleLocalPosition;
 
         muzzlePoint.localRotation = visual.muzzleLocalRotation;
+
+        PlayMuzzleFlash();
+    }
+
+    public void PlayMuzzleFlash()
+    {
+        if (muzzleRoutine != null)
+        {
+            StopCoroutine(muzzleRoutine);
+        }
+
+        muzzleRoutine = StartCoroutine(MuzzleFlashRoutine());
+    }
+
+    private IEnumerator MuzzleFlashRoutine()
+    {
+        muzzlePoint.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(0.1f);
+
+        muzzlePoint.gameObject.SetActive(false);
+
+        muzzleRoutine = null;
     }
 }

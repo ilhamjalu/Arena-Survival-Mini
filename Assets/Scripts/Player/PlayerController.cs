@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour, IDamageable, ITeamMember
     [SerializeField] BulletSpawner bulletSpawner;
     [SerializeField] BulletController bulletPrefabs;
     [SerializeField] WeaponView weaponView;
-
     public Team team => Team.Player;
 
     // Start is called before the first frame update
@@ -77,8 +76,8 @@ public class PlayerController : MonoBehaviour, IDamageable, ITeamMember
     {
         Vector2 direction = (target.position - weaponView.firePoint.position).normalized;
 
-        bulletSpawner.Spawn(weaponView.firePoint.position, direction, team);
         weaponView.UpdateDirection(direction);
+        bulletSpawner.Spawn(weaponView.firePoint.position, direction, team);
     }
 
     public void TakeDamage(int amount)
